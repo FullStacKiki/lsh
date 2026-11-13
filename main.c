@@ -8,8 +8,12 @@
 #define LSH_TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
 
+// clear console function
+void clear_screen() { printf("\033[2J\033[H"); }
+
+// reading line by character
 char *lsh_read_line(void) {
-  int bufsize = LSH_RL_BUFSIZE;
+  int bufsize = LSH_RL_BUFSIZE; // set the size of the bufsize
   int position = 0;
   char *buffer = malloc(sizeof(char) * bufsize);
   int c;
@@ -104,6 +108,7 @@ int lsh_cd(char **args) {
 }
 
 int lsh_help(char **args) {
+  clear_screen();
   (void)args;
   printf("BALUS LSH\n");
   printf("Type programs name and hit enter!\n");
@@ -138,10 +143,10 @@ void lsh_loop(void) {
   int status;
 
   do {
-    printf("> ");
-    line = lsh_read_line();
-    args = lsh_split_line(line);
-    status = lsh_execute(args);
+    printf("> ");                // printing >
+    line = lsh_read_line();      // reading line
+    args = lsh_split_line(line); // divides lines into characters
+    status = lsh_execute(args);  // execute the actual comand
     free(line);
     free(args);
   } while (status);
